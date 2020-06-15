@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,7 +14,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,12 +26,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
-public class EncourageActivity extends AppCompatActivity {
+public class EncourageActivity extends AppCompatActivity{
 
+
+    private final String TAG = EncourageActivity.class.getSimpleName();
     Spinner spinner, spinner2, spinner3;
 
     EditText editText;
@@ -98,6 +109,8 @@ public class EncourageActivity extends AppCompatActivity {
         spinner3.setAdapter(adapter3);
 
 
+
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -122,39 +135,108 @@ public class EncourageActivity extends AppCompatActivity {
                                 button.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                            reference.addValueEventListener(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                    for(DataSnapshot ds: dataSnapshot.getChildren()){
-                                                        Member member = ds.getValue(Member.class);
-                                                        String child = member.getName();
-                                                        String cat1 = member.getCat1();
-                                                        String cat2 = member.getCat2();
-                                                        String cat3 = member.getCat3();
-                                                        String cat4 = member.getCat4();
 
-                                                        if(childSelected.equals(child)){
-                                                            if(behaviourSelected.equals(cat1)){
-                                                                member.setCat1value(value);
-                                                            }
-                                                            else if(behaviourSelected.equals(cat2)){
-                                                                member.setCat2value(value);
-                                                            }
-                                                            else if(behaviourSelected.equals(cat3)){
-                                                                member.setCat3value(value);
-                                                            }
-                                                            else{
-                                                                member.setCat4value(value);
-                                                            }
+                                        reference.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for(DataSnapshot ds: dataSnapshot.getChildren()){
+
+                                                    String key;
+                                                    Member member = ds.getValue(Member.class);
+                                                    String child = member.getName();
+                                                    String cat1 = member.getCat1();
+                                                    String cat2 = member.getCat2();
+                                                    String cat3 = member.getCat3();
+                                                    String cat4 = member.getCat4();
+
+
+                                                    if(childSelected.equals(child)){
+
+                                                        key = ds.getKey();
+                                                        if(behaviourSelected.equals(cat1)){
+                                                            member.setCat1value(value);
                                                         }
+                                                        else if(behaviourSelected.equals(cat2)){
+                                                            member.setCat2value(value);
+                                                        }
+                                                        else if(behaviourSelected.equals(cat3)){
+                                                            member.setCat3value(value);
+                                                        }
+                                                        else{
+                                                            member.setCat4value(value);
+                                                        }
+
+
+                                                        HashMap<String, Object> has = new HashMap<>();
+                                                        HashMap<String, Object> hasTWo = member.toMap();
+
+                                                        if(member.getDates() == null){
+                                                            HashMap<String, Object> newDatesTwo = new HashMap<>();
+
+                                                            HashMap<String, Object> newDates = new HashMap<>();
+
+                                                            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                                            Date date = new Date();
+                                                            newDatesTwo.put(behaviourSelected, value);
+                                                            newDates.put(dateFormat.format(date), newDatesTwo);
+                                                            hasTWo.put("dates", newDates);
+                                                            has.put(key, hasTWo);
+
+                                                        }else {
+                                                            HashMap<String, Object> dates = member.getDates();
+                                                            HashMap<String, Object> newDatesTwo = new HashMap<>();
+                                                            hasTWo.remove("dates");
+
+
+                                                            Log.i(TAG, dates.toString());
+
+                                                            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                                            Date date = new Date();
+
+                                                            if(dates.containsKey(dateFormat.format(date))){
+                                                                HashMap<String, Object> val = (HashMap<String, Object>) dates.get(dateFormat.format(date));
+                                                                val.put(behaviourSelected, value);
+                                                                dates.remove(dateFormat.format(date));
+                                                                dates.put(dateFormat.format(date), val);
+                                                            }else{
+                                                                newDatesTwo.put(behaviourSelected, value);
+                                                                dates.put(dateFormat.format(date), newDatesTwo);
+                                                            }
+
+
+                                                            Log.i(TAG, dates.toString());
+
+                                                            hasTWo.put("dates", dates);
+                                                            has.put(key, hasTWo);
+                                                        }
+
+                                                        reference.updateChildren(has).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Log.i(TAG, "Updated Succesfull");
+                                                                Toast.makeText(getApplicationContext(), "Data inserted successfully", Toast.LENGTH_LONG).show();
+                                                            }
+                                                        }).addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                Log.i(TAG, "Failed to updated object");
+
+                                                                Toast.makeText(getApplicationContext(), "Failed to insert data successfully", Toast.LENGTH_LONG).show();
+
+                                                            }
+                                                        });
+
+
                                                     }
                                                 }
 
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            }
 
-                                                }
-                                            });
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
                                     }
                                 });
                             }
@@ -215,6 +297,7 @@ public class EncourageActivity extends AppCompatActivity {
 
 
     }
+
     public void retrieveData (){
 
         listener =  reference.addValueEventListener(new ValueEventListener() {
@@ -229,7 +312,6 @@ public class EncourageActivity extends AppCompatActivity {
                 spinnerDataList.clear();
                 spinnerDataList.addAll(list);
                 adapter.notifyDataSetChanged();
-
             }
 
             @Override
@@ -238,6 +320,7 @@ public class EncourageActivity extends AppCompatActivity {
             }
         });
     }
+
     public void retrieveData2(final String childSelected){
 
         listener =  reference.addValueEventListener(new ValueEventListener() {
