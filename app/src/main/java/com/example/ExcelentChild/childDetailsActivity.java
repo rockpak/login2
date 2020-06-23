@@ -136,6 +136,7 @@ public class childDetailsActivity extends AppCompatActivity {
                 startActivity(intToMain);
             }
         });
+        /*
         btnSurprise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +145,8 @@ public class childDetailsActivity extends AppCompatActivity {
                 startActivity(intToMain);
             }
         });
+
+         */
         btnSubmit.setOnClickListener(new View.OnClickListener(){
 
             @Override

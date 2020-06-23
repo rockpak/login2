@@ -9,59 +9,41 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class HomeActivity extends AppCompatActivity {
-
-    Button btnLogout;
-    Button btnChildDetails;
-    Button btnEncourage;
-    Button btnSurprise;
-
-    FirebaseAuth mFirebaseAuth;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        btnLogout = findViewById(R.id.logout);
-        btnChildDetails = findViewById(R.id.childDetils);
-        btnEncourage = findViewById(R.id.encourage);
-        btnSurprise = findViewById(R.id.surprise);
+        findViewById(R.id.logout).setOnClickListener(this);
+        findViewById(R.id.childDetils).setOnClickListener(this);
+        findViewById(R.id.encourage).setOnClickListener(this);
+        findViewById(R.id.childSummary).setOnClickListener(this);
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intToMain = new Intent(HomeActivity.this, LoginActivity.class);
-                startActivity(intToMain);
-            }
-        });
-        btnChildDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance();
-                Intent intToMain = new Intent(HomeActivity.this, childDetailsActivity.class);
-                startActivity(intToMain);
-            }
-        });
-        btnEncourage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance();
-                Intent intToMain = new Intent(HomeActivity.this, EncourageActivity.class);
-                startActivity(intToMain);
-            }
-        });
-        btnSurprise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance();
-                Intent intToMain = new Intent(HomeActivity.this, SurpriseActivity.class);
-                startActivity(intToMain);
-            }
-        });
     }
 
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.childDetils:{
+                startActivity(new Intent(HomeActivity.this, childDetailsActivity.class));
+                break;
+            }
+            case R.id.encourage:{
+                startActivity(new Intent(HomeActivity.this, EncourageActivity.class));
+                break;
+            }
+            case R.id.logout:{
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                break;
+            }
+            case R.id.childSummary:{
+                startActivity(new Intent(HomeActivity.this, SummaryActivity.class));
+                break;
+            }
+        }
+    }
 }
