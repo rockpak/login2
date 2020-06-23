@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxHeight="400dp"
+    >
+
+
+
+    <LinearLayout
+        android:id="@+id/des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:text="@string/excessive_phone_use"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            />
+
+            <TextView
+                android:id="@+id/excessive_phone_use"
+                android:text="@string/no_record_fond"
+                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:text="@string/homework"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                />
+
+            <TextView
+                android:id="@+id/homeWork"
+                android:text="@string/no_record_fond"
+                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:text="@string/eating"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                />
+
+            <TextView
+                android:id="@+id/eating"
+                android:text="@string/no_record_fond"
+                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:text="@string/excessive_playing"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                />
+
+            <TextView
+                android:id="@+id/excessive_playing"
+                android:text="@string/no_record_fond"
+                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/closeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/close"
+        android:layout_below="@+id/des"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        />
+
+</RelativeLayout>

@@ -11,4 +11,11 @@
     <string name="child_behaviour_summary">Child Behaviour Summary</string>
     <string name="select_day">Select Day</string>
     <string name="select_child_name">Select Child Name</string>
+    <string name="close">Close</string>
+    <string name="monday">Monday</string>
+    <string name="homework">HomeWork</string>
+    <string name="excessive_playing">Excessive Playing</string>
+    <string name="eating">Eating</string>
+    <string name="excessive_phone_use">Excessive Phone Use</string>
+    <string name="no_record_fond">No Record Found</string>
 </resources>

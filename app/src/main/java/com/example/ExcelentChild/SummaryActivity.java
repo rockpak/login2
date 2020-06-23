@@ -1,5 +1,7 @@
 package com.example.ExcelentChild;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -119,13 +122,14 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
                 showDialog("No Data Has Been Yet Recorded for " + selectedChild);
             }else {
                 if (days.containsKey(daySelected)) {
-                    StringBuilder stringBuilder = new StringBuilder();
+                    Map<String, String> be = new HashMap<>();
 
                     for (String keys : days.get(daySelected).keySet()) {
-                        stringBuilder.append(keys + " " + days.get(daySelected).get(keys) + "\n");
+                        be.put(keys, days.get(daySelected).get(keys));
                     }
 
-                    showDialog(stringBuilder.toString());
+                    DialogFragment dialogFragment = new BehaviourDailog(be);
+                    dialogFragment.showNow(getSupportFragmentManager(), "dialog");
 
                 } else {
                     showDialog("No Record Found for the selected day");

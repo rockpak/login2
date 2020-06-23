@@ -13,62 +13,77 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="120dp"
         android:text="@string/child_behaviour_summary"
         android:gravity="center"
+        android:textStyle="bold"
         >
     </TextView>
 
-
-    <GridLayout
+    <RelativeLayout
+        android:id="@+id/childNameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/heading"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="218dp"
-        android:columnCount="2"
-        android:rowCount="2">
+        android:layout_marginTop="100dp"
+        >
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:background="#25982E"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:text="@string/select_day"
             android:layout_gravity="center"
-            android:textColor="#FFFFFF" />
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="bold"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            />
 
         <Spinner
             android:id="@+id/mySpinner"
             android:layout_width="200dp"
             android:layout_height="55dp"
-            android:layout_row="0"
-            android:layout_column="1" />
+            android:layout_alignParentRight="true"
+           />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/childNameLayout"
+        android:layout_marginTop="50dp"
+        >
+
 
 
         <TextView
             android:id="@+id/textView15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:background="#25982E"
             android:text="@string/select_child_name"
             android:layout_gravity="center"
-            android:textColor="#FFFFFF" />
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            />
 
 
         <Spinner
             android:id="@+id/mySpinner2"
             android:layout_width="200dp"
             android:layout_height="55dp"
-            android:layout_row="1"
-            android:layout_column="1" />
+            android:layout_alignParentRight="true"
+           />
 
 
-    </GridLayout>
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
