@@ -142,7 +142,7 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void showDialog(String message){
+    public void showDialog(String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {

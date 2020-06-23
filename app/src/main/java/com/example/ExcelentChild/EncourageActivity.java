@@ -1,8 +1,10 @@
 package com.example.ExcelentChild;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,7 +37,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class EncourageActivity extends AppCompatActivity{
+public class EncourageActivity extends AppCompatActivity implements View.OnClickListener{
 
 
     private final String TAG = EncourageActivity.class.getSimpleName();
@@ -81,127 +83,105 @@ public class EncourageActivity extends AppCompatActivity{
         spinner2 = findViewById(R.id.mySpinner2);
         spinner3 = findViewById(R.id.mySpinner3);
 
-        btnLogout = findViewById(R.id.logout);
+        findViewById(R.id.logout).setOnClickListener(this);
         btnBack = findViewById(R.id.back);
         btnChildDetails = findViewById(R.id.childDetils);
         btnSurprise = findViewById(R.id.surprise);
 
+        button.setOnClickListener(this);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         database = FirebaseDatabase.getInstance();
         assert user != null;
-        String uid = user.getUid();
-        reference = database.getReference().child(uid);
+        reference = database.getReference().child(user.getUid());
         behaviourRef = database.getReference("Behaviour");
 
         spinnerDataList = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(EncourageActivity.this,android.R.layout.simple_spinner_dropdown_item,spinnerDataList);
-        spinner.setAdapter(adapter);
+        spinner.setAdapter(new ArrayAdapter<String>(EncourageActivity.this,android.R.layout.simple_spinner_dropdown_item,spinnerDataList));
         retrieveData();
 
         spinnerDataList2 = new ArrayList<>();
-        adapter2 = new ArrayAdapter<String>(EncourageActivity.this,android.R.layout.simple_spinner_dropdown_item,spinnerDataList2);
-        spinner2.setAdapter(adapter2);
+        spinner2.setAdapter(new ArrayAdapter<String>(EncourageActivity.this,android.R.layout.simple_spinner_dropdown_item,spinnerDataList2));
 
         spinnerDataList3 = new ArrayList<>();
-        adapter3 = new ArrayAdapter<String>(EncourageActivity.this,android.R.layout.simple_spinner_dropdown_item,spinnerDataList3);
-        spinner3.setAdapter(adapter3);
-
+        spinner3.setAdapter(new ArrayAdapter<String>(EncourageActivity.this,android.R.layout.simple_spinner_dropdown_item,spinnerDataList3));
 
 
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                final String childSelected = parent.getSelectedItem().toString();
-
-                retrieveData2(childSelected);
-
-                spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        final String behaviourSelected = parent.getSelectedItem().toString();
-
-                        retrieveData3(behaviourSelected);
-
-                        spinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                final String value = parent.getSelectedItem().toString();
-
-
-                                button.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-
-                                        reference.addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                for(DataSnapshot ds: dataSnapshot.getChildren()){
-                                                    updateChildBehaviour(ds, behaviourSelected, childSelected, value);
-                                                }
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                retrieveData2(adapterView.getSelectedItem().toString());
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                retrieveData3(adapterView.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
 
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intToMain = new Intent(EncourageActivity.this, LoginActivity.class);
-                startActivity(intToMain);
-            }
-        });
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance();
-                Intent intToMain = new Intent(EncourageActivity.this, HomeActivity.class);
-                startActivity(intToMain);
-            }
-        });
-        btnChildDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance();
-                Intent intToMain = new Intent(EncourageActivity.this, childDetailsActivity.class);
-                startActivity(intToMain);
-            }
-        });
+
 
 
     }
+
+    private void setOnSelected(){
+        if(spinner3.getSelectedItem() != null && spinner2.getSelectedItem() != null && spinner.getSelectedItem() != null){
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot ds: dataSnapshot.getChildren()){
+                        updateChildBehaviour(ds, (String) spinner2.getSelectedItem(), (String) spinner.getSelectedItem(), (String) spinner3.getSelectedItem());
+
+                        Log.i(TAG, (String) spinner.getSelectedItem() + "  " +(String) spinner2.getSelectedItem() + "  " +  (String) spinner3.getSelectedItem());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }else{
+            if(spinner3.getSelectedItem() == null){
+                showDialog("Please Select ");
+            }else if(spinner2.getSelectedItem() == null){
+                showDialog("Please Select ");
+            }else if(spinner.getSelectedItem() == null){
+                showDialog("Please Select ");
+            }
+        }
+    }
+
+    public void showDialog(String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        builder.setMessage(message);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
 
     public void updateChildBehaviour(final DataSnapshot ds, final String behaviourSelected, final String childSelected, final String value){
 
@@ -281,9 +261,7 @@ public class EncourageActivity extends AppCompatActivity{
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Log.i(TAG, "Failed to updated object");
-
                     Toast.makeText(getApplicationContext(), "Failed to insert data successfully", Toast.LENGTH_LONG).show();
-
                 }
             });
 
@@ -401,4 +379,27 @@ public class EncourageActivity extends AppCompatActivity{
     }
 
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.button:{
+                setOnSelected();
+                break;
+            }
+            case R.id.logout:{
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(EncourageActivity.this, LoginActivity.class));
+                break;
+            }
+            case R.id.back:{
+                startActivity(new Intent(EncourageActivity.this, HomeActivity.class));
+                break;
+            }
+            case R.id.childDetils:{
+                startActivity(new Intent(EncourageActivity.this, childDetailsActivity.class));
+                break;
+            }
+        }
+
+    }
 }
