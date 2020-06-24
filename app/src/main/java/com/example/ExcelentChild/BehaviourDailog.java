@@ -49,6 +49,11 @@ public class BehaviourDailog extends DialogFragment implements View.OnClickListe
                     setText(v, R.id.excessive_playing, be.get("Excessive Playing"));
                     break;
                 }
+                case "Excessive Phone Uses":{
+                    setText(v, R.id.excessive_phone_use, be.get("Excessive Phone Uses"));
+                    break;
+                }
+
 
             }
         }
