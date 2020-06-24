@@ -98,14 +98,18 @@ public class EncourageActivity extends AppCompatActivity implements View.OnClick
         behaviourRef = database.getReference("Behaviour");
 
         spinnerDataList = new ArrayList<>();
-        spinner.setAdapter(new ArrayAdapter<String>(EncourageActivity.this,android.R.layout.simple_spinner_dropdown_item,spinnerDataList));
+
+        adapter = new ArrayAdapter<String>(EncourageActivity.this,android.R.layout.simple_spinner_dropdown_item,spinnerDataList);
+        spinner.setAdapter(adapter);
         retrieveData();
 
         spinnerDataList2 = new ArrayList<>();
-        spinner2.setAdapter(new ArrayAdapter<String>(EncourageActivity.this,android.R.layout.simple_spinner_dropdown_item,spinnerDataList2));
+        adapter2 = new ArrayAdapter<String>(EncourageActivity.this,android.R.layout.simple_spinner_dropdown_item,spinnerDataList2);
+        spinner2.setAdapter(adapter2);
 
         spinnerDataList3 = new ArrayList<>();
-        spinner3.setAdapter(new ArrayAdapter<String>(EncourageActivity.this,android.R.layout.simple_spinner_dropdown_item,spinnerDataList3));
+        adapter3 = new ArrayAdapter<String>(EncourageActivity.this,android.R.layout.simple_spinner_dropdown_item,spinnerDataList3);
+        spinner3.setAdapter(adapter3);
 
 
 
