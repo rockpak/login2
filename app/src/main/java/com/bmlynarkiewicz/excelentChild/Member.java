@@ -1,7 +1,6 @@
-package com.example.ExcelentChild;
+package com.bmlynarkiewicz.excelentChild;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class Member {
     private String name;

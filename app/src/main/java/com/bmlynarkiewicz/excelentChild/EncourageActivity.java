@@ -1,4 +1,4 @@
-package com.example.ExcelentChild;
+package com.bmlynarkiewicz.excelentChild;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,14 +27,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class EncourageActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -98,7 +94,6 @@ public class EncourageActivity extends AppCompatActivity implements View.OnClick
         behaviourRef = database.getReference("Behaviour");
 
         spinnerDataList = new ArrayList<>();
-
         adapter = new ArrayAdapter<String>(EncourageActivity.this,android.R.layout.simple_spinner_dropdown_item,spinnerDataList);
         spinner.setAdapter(adapter);
         retrieveData();
@@ -299,7 +294,11 @@ public class EncourageActivity extends AppCompatActivity implements View.OnClick
                 }
                 spinnerDataList.clear();
                 spinnerDataList.addAll(list);
-                adapter.notifyDataSetChanged();
+                if(adapter != null){
+                    adapter.notifyDataSetChanged();
+                }else{
+                    Log.i(TAG, "Adapter is null");
+                }
             }
 
             @Override
@@ -392,15 +391,15 @@ public class EncourageActivity extends AppCompatActivity implements View.OnClick
             }
             case R.id.logout:{
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(EncourageActivity.this, LoginActivity.class));
+                startActivity(new Intent(EncourageActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 break;
             }
             case R.id.back:{
-                startActivity(new Intent(EncourageActivity.this, HomeActivity.class));
+                startActivity(new Intent(EncourageActivity.this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 break;
             }
             case R.id.childDetils:{
-                startActivity(new Intent(EncourageActivity.this, childDetailsActivity.class));
+                startActivity(new Intent(EncourageActivity.this, childDetailsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 break;
             }
         }

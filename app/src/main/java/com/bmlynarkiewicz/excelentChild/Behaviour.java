@@ -1,4 +1,4 @@
-package com.example.ExcelentChild;
+package com.bmlynarkiewicz.excelentChild;
 
 import androidx.annotation.NonNull;
 

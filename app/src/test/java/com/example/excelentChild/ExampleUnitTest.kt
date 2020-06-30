@@ -1,4 +1,4 @@
-package com.example.ExcelentChild
+package com.example.excelentChild
 
 import org.junit.Test
 

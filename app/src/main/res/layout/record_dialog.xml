@@ -16,26 +16,8 @@
         android:orientation="vertical"
         >
 
-        <TextView
-            android:text="@string/excessive_phone_use"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            />
-
             <TextView
-                android:id="@+id/excessive_phone_use"
-                android:text="@string/no_record_fond"
-                android:layout_marginLeft="20dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                />
-
-            <TextView
-                android:text="@string/homework"
+                android:text="@string/monday"
                 android:textStyle="bold"
                 android:textSize="15sp"
                 android:layout_height="wrap_content"
@@ -43,7 +25,7 @@
                 />
 
             <TextView
-                android:id="@+id/homeWork"
+                android:tag="@string/monday"
                 android:text="@string/no_record_fond"
                 android:layout_marginLeft="20dp"
                 android:layout_height="wrap_content"
@@ -53,7 +35,7 @@
                 />
 
             <TextView
-                android:text="@string/eating"
+                android:text="@string/tuesday"
                 android:textStyle="bold"
                 android:textSize="15sp"
                 android:layout_height="wrap_content"
@@ -61,7 +43,7 @@
                 />
 
             <TextView
-                android:id="@+id/eating"
+                android:tag="@string/tuesday"
                 android:text="@string/no_record_fond"
                 android:layout_marginLeft="20dp"
                 android:layout_height="wrap_content"
@@ -71,7 +53,7 @@
                 />
 
             <TextView
-                android:text="@string/excessive_playing"
+                android:text="@string/wednesday"
                 android:textStyle="bold"
                 android:textSize="15sp"
                 android:layout_height="wrap_content"
@@ -79,7 +61,7 @@
                 />
 
             <TextView
-                android:id="@+id/excessive_playing"
+                android:tag="@string/wednesday"
                 android:text="@string/no_record_fond"
                 android:layout_marginLeft="20dp"
                 android:layout_height="wrap_content"
@@ -87,6 +69,105 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 />
+
+            <TextView
+                android:text="@string/thursday"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                />
+
+            <TextView
+                android:tag="@string/thursday"
+                android:text="@string/no_record_fond"
+                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:text="@string/friday"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                />
+
+            <TextView
+                android:tag="@string/friday"
+                android:text="@string/no_record_fond"
+                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:text="@string/saturday"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                />
+
+            <TextView
+                android:tag="@string/saturday"
+                android:text="@string/no_record_fond"
+                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:text="@string/sunday"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                />
+
+            <TextView
+                android:tag="@string/sunday"
+                android:text="@string/no_record_fond"
+                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                >
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/average"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:tag="@string/average"
+                    android:text="@string/no_record_fond"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    />
+
+
+            </LinearLayout>
 
     </LinearLayout>
 
