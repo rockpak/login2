@@ -48,7 +48,7 @@ public class BehaviourDailog extends DialogFragment implements View.OnClickListe
                 }
             }
 
-            setText(v, "Average", rateBeh(be.get(new ArrayList<String>(be.keySet()).get(0)).get(behaviourSelected)));
+            setText(v, "Average",rateBeh((daysRecorded*3),(daysRecorded > 1 ? (avg/daysRecorded) : avg),be.get(new ArrayList<String>(be.keySet()).get(0)).get(behaviourSelected)));
 
     }
 
@@ -62,9 +62,7 @@ public class BehaviourDailog extends DialogFragment implements View.OnClickListe
         }
     }
 
-    private String rateBeh(String resString){
-        int max = daysRecorded * 3;
-        int res = daysRecorded > 1 ? (avg/daysRecorded) : avg;
+    private String rateBeh(int max, int res, String resString){
         return daysRecorded == 0 ? "No Records" : (daysRecorded == 1 ? resString : ((res > 0 && res <= (max*.25)) ? "Good" : (((res > (max*.25) && res <= (max*.5) ? "Very Good" : "Excellent")))));
     }
 
