@@ -1,4 +1,4 @@
-package com.bmlynarkiewicz.excelentChild;
+package com.example.login2;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

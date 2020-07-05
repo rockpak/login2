@@ -1,9 +1,8 @@
-package com.bmlynarkiewicz.excelentChild;
+package com.example.login2;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -129,12 +128,10 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
         dialog.show();
     }
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.button4:{
-                retriveDaySummary();
                 break;
             }
             case R.id.back:{
@@ -142,5 +139,9 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             }
         }
+    }
+
+    public void retriveSummary(View view) {
+        retriveDaySummary();
     }
 }

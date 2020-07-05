@@ -1,4 +1,4 @@
-package com.bmlynarkiewicz.excelentChild;
+package com.example.login2;
 
 import android.content.Intent;
 import android.os.Build;
