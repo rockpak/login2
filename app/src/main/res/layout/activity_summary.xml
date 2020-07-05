@@ -99,7 +99,6 @@
             android:layout_height="36dp"
             android:background="@drawable/sub_button"
             android:text="@string/submit"
-            android:onClick="retriveSummary"
             android:textColor="#5E88B8"
             android:layout_marginBottom="20dp"
             android:layout_centerHorizontal="true"

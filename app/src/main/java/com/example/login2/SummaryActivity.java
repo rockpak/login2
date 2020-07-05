@@ -132,6 +132,7 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.button4:{
+                retriveDaySummary();
                 break;
             }
             case R.id.back:{
@@ -141,7 +142,4 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    public void retriveSummary(View view) {
-        retriveDaySummary();
-    }
 }
