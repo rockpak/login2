@@ -3,7 +3,9 @@ package com.example.login2;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -50,16 +52,18 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
         findViewById(R.id.back).setOnClickListener(this);
 
 
-        DatabaseReference reference = database.getReference(firebaseUser.getUid());
+        final DatabaseReference reference = database.getReference(firebaseUser.getUid());
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> catsList = null;
                 for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                     if(dataSnapshot1.child("name").exists()){
                         names.add(dataSnapshot1.child("name").getValue(String.class));
                     }
 
+                    catsList = retriveCat(dataSnapshot1);
                     Map<String, Map<String,String>> days = new HashMap<>();
 
                     if(dataSnapshot1.child("dates").exists()){
@@ -78,6 +82,7 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
                 }
 
                 childName.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, names));
+                //daysSpinner.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, catsList));
             }
 
             @Override
@@ -86,9 +91,56 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+        childName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                daysSpinner.setAdapter(null);
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        ArrayList<String> catsList = null;
+                        for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                            if((dataSnapshot1.child("name").getValue(String.class)).equals(childName.getSelectedItem().toString())) {
+                                catsList = retriveCat(dataSnapshot1);
+                            }
+                        }
 
-        daysSpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, behaviours));
+                        Log.i(TAG, childName.getSelectedItem().toString());
 
+                        if(catsList != null){
+
+                            daysSpinner.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, catsList));
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+
+    }
+
+    private ArrayList<String> retriveCat(DataSnapshot dataSnapshot){
+
+        ArrayList<String> catsList = new ArrayList<>();
+
+        String[] cats = {"cat1","cat2","cat3","cat4"};
+        for(String cat : cats) {
+            if (dataSnapshot.child(cat).exists()) {
+                catsList.add(dataSnapshot.child(cat).getValue(String.class));
+            }
+        }
+
+        return catsList;
     }
 
     private void retriveDaySummary(){
