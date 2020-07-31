@@ -44,12 +44,15 @@ public class BehaviourDailog extends DialogFragment implements View.OnClickListe
                     if (be.get(key).containsKey(behaviourSelected)) {
                         setText(v, key, be.get(key).get(behaviourSelected));
                         incAvg(be.get(key).get(behaviourSelected));
+                        Log.i(TAG, be.get(key).get(behaviourSelected));
                         daysRecorded++;
                     }
                 }
             }
 
-            setText(v, "Average",rateBeh((daysRecorded*3),(daysRecorded > 1 ? (avg/daysRecorded) : avg),be.get(new ArrayList<String>(be.keySet()).get(0)).get(behaviourSelected)));
+            Log.i(TAG, "Average " + avg + " days recoreder " + daysRecorded);
+
+            setText(v, "Average", rateBeh((daysRecorded*3),(daysRecorded > 1 ? ((daysRecorded/avg)) : avg), be.get(new ArrayList<String>(be.keySet()).get(0)).get(behaviourSelected)));
 
     }
 
@@ -63,7 +66,9 @@ public class BehaviourDailog extends DialogFragment implements View.OnClickListe
         }
     }
 
-    private String rateBeh(int max, int res, String resString){
+    private String rateBeh(int max, double res, String resString){
+        Log.i(TAG, "Average " + max + " days recoreder " + res + " " + (res > 0 && res <= (max*.25)) + " " + (max*.5));
+
         return daysRecorded == 0 ? "No Records" : (daysRecorded == 1 ? resString : ((res > 0 && res <= (max*.25)) ? "Good" : (((res > (max*.25) && res <= (max*.5) ? "Very Good" : "Excellent")))));
     }
 
