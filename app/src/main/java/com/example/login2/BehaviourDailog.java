@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -17,7 +20,7 @@ public class BehaviourDailog extends DialogFragment implements View.OnClickListe
     private final String TAG = Behaviour.class.getSimpleName();
     private Map<String,Map<String, String>> be;
     private String behaviourSelected;
-    private int avg, daysRecorded;
+    private double avg, daysRecorded;
 
     public BehaviourDailog(Map<String, Map<String, String>> be, String behaviourSelected){
         this.be = be;
@@ -52,13 +55,13 @@ public class BehaviourDailog extends DialogFragment implements View.OnClickListe
 
             Log.i(TAG, "Average " + avg + " days recoreder " + daysRecorded);
 
-            setText(v, "Average", rateBeh((daysRecorded*3),(daysRecorded > 1 ? ((daysRecorded/avg)) : avg), be.get(new ArrayList<String>(be.keySet()).get(0)).get(behaviourSelected)));
+            setText(v, "Average", rateBeh((daysRecorded*3),(daysRecorded > 1 ? ((new BigDecimal(avg/daysRecorded).setScale(0,BigDecimal.ROUND_UP).doubleValue())) : avg), be.get(new ArrayList<String>(be.keySet()).get(0)).get(behaviourSelected)));
 
     }
 
     private void incAvg(String res){
         if(res.contains("Excellent")){
-            avg += 3;
+            avg += 4;
         }else if(res.contains("Very Good")){
             avg += 2;
         }else if(res.contains("Good")){
@@ -66,10 +69,10 @@ public class BehaviourDailog extends DialogFragment implements View.OnClickListe
         }
     }
 
-    private String rateBeh(int max, double res, String resString){
-        Log.i(TAG, "Average " + max + " days recoreder " + res + " " + (res > 0 && res <= (max*.25)) + " " + (max*.5));
+    private String rateBeh(double max, double res, String resString){
+        Log.i(TAG, "Average " + max + " days recoreder " + res + " " + (res > 0 && res <= (max*.25)) + " " + (max*.5) + " " + (max*.25));
 
-        return daysRecorded == 0 ? "No Records" : (daysRecorded == 1 ? resString : ((res > 0 && res <= (max*.25)) ? "Good" : (((res > (max*.25) && res <= (max*.5) ? "Very Good" : "Excellent")))));
+        return daysRecorded == 0 ? "No Records" : (daysRecorded == 1 ? resString : ((res > 0 && res <= (max*.20)) ? "Good" : (((res > (max*.20) && res <= (max*.40) ? "Very Good" : "Excellent")))));
     }
 
     private void setText(View v, String id, String text){
